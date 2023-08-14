@@ -33,6 +33,11 @@ public class Instance {
     private ServiceStatus status;
 
     /**
+     * 服务角色
+     */
+    private Role role;
+
+    /**
      * 扩展信息
      */
     private String ext;

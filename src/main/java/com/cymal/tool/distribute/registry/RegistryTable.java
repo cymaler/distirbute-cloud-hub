@@ -33,14 +33,20 @@ public class RegistryTable {
             } finally {
                 writeLock.unlock();
             }
+        } else {
+            rs = true;
         }
         return rs;
     }
 
     public boolean registry(Instance [] instances) {
+        boolean rs = true;
         for(Instance instance : instances) {
-
+            if (registry(instance)) {
+                rs = false;
+            }
         }
+        return rs;
     }
 
     public boolean registry(Collection<Instance> instances) {
