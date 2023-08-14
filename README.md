@@ -1,11 +1,11 @@
-# Tool-hub-common(for distribute)
+# distribute-cloud-hub(Dch)
 
-Provider distribute tools to construct your project more quickly.
+Provider distribute moudles to construct your cloud project more quickly.
 
-| Distribute Package |                  Function                  |
-| :----------------: | :----------------------------------------: |
-|       cache        |         Provider distribute cache.         |
-|     concurrent     | Provider distribute concurrent tool class. |
-|        hash        |    Provider distribute Hash Algorithms.    |
-|      registry      |    Provider Service Registry And Found.    |
+|             Distribute Package              |              Function              |
+|:-------------------------------------------:|:----------------------------------:|
+|      distribute-cloud-hub-rpc(Dch-Rpc)      |       Provider rpc ability.        |
+| distribute-cloud-hub-registry(Dch-Registry) | Provider service registry & found. |
+|    distribute-cloud-hub-cache(Dch-cache)    |     Provider distribute cache.     |
+|  distribute-cloud-hub-gateway(Dch-gateway)  |    Provider distribute gateway.    |
 

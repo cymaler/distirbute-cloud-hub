@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>distirbute-tool-hub-rpc</artifactId>
+    <artifactId>distirbute-cloud-hub-rpc</artifactId>
 
-    <name>distirbute-tool-hub-rpc</name>
+    <name>distirbute-cloud-hub-rpc</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
