@@ -6,6 +6,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>distirbute-cloud-hub-rpc</module>
+      <module>distribute-cloud-hub-registry</module>
     </modules>
     <parent>
     <groupId>org.springframework.boot</groupId>
