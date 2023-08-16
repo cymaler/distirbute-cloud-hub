@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="distribute-cloud-hub-registry" />
         <module name="distirbute-cloud-hub-rpc" />
+        <module name="distribute-cloud-cache" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="distirbute-cloud-hub-rpc" options="-parameters" />
+      <module name="distribute-cloud-cache" options="-parameters" />
       <module name="distribute-cloud-hub-registry" options="-parameters" />
       <module name="tool-hub-common" options="-parameters" />
     </option>
