@@ -7,16 +7,26 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="distribute-cloud-hub-registry" />
+        <module name="distribute-cloud-hub-mq" />
         <module name="distirbute-cloud-hub-rpc" />
-        <module name="distribute-cloud-cache" />
+        <module name="distribute-cloud-hub-sentinel" />
+        <module name="distribute-cloud-hub-transation" />
+        <module name="distribute-cloud-hub-caching" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="distribute-cloud-hub-cache" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="distirbute-cloud-hub-rpc" options="-parameters" />
-      <module name="distribute-cloud-cache" options="-parameters" />
+      <module name="distribute-cloud-hub-cache" options="-parameters" />
+      <module name="distribute-cloud-hub-caching" options="-parameters" />
+      <module name="distribute-cloud-hub-mq" options="-parameters" />
       <module name="distribute-cloud-hub-registry" options="-parameters" />
+      <module name="distribute-cloud-hub-sentinel" options="-parameters" />
+      <module name="distribute-cloud-hub-transation" options="-parameters" />
       <module name="tool-hub-common" options="-parameters" />
     </option>
   </component>
