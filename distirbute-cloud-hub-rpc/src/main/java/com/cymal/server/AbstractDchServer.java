@@ -1,66 +1,67 @@
 package com.cymal.server;
 
-import com.cymal.codec.DchCodec;
-import com.cymal.compress.DchCompress;
 import com.cymal.properties.DchServerProperties;
-import com.cymal.protocol.decoder.DchReqBodyDecoder;
-import com.cymal.protocol.decoder.DchReqProtocolDecoder;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.*;
+import io.netty.buffer.PooledByteBufAllocator;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.concurrent.DefaultThreadFactory;
+
+import java.util.concurrent.ThreadFactory;
 
 /**
- * 服务端
- * 1. 如何做路由
- * 2.
+ *
  */
-public abstract class AbstractDchServer implements DchServer{
+public abstract class AbstractDchServer implements DchServer {
 
-    private final DchCodec dchCodec;
-    private final DchCompress dchCompress;
+    private static volatile boolean runned;
+    private volatile NioEventLoopGroup boss;
+    private volatile NioEventLoopGroup work;
     private final DchServerProperties dchServerProperties;
+    private ThreadFactory bossTf = new DefaultThreadFactory("dch_rpc_" + this.getClass().getSimpleName().toLowerCase() + "_boss");
+    private ThreadFactory workTf = new DefaultThreadFactory("dch_rpc_" + this.getClass().getSimpleName().toLowerCase() + "_work");
 
-    protected AbstractDchServer(DchServerProperties dchServerProperties, DchCodec dchCodec) {
+    protected AbstractDchServer(DchServerProperties dchServerProperties) {
         this.dchServerProperties = dchServerProperties;
-        this.dchCodec = dchCodec;
-        this.dchCompress = null;
-    }
-
-    protected AbstractDchServer(DchServerProperties dchServerProperties, DchCodec dchCodec, DchCompress dchCompress) {
-        this.dchServerProperties = dchServerProperties;
-        this.dchCodec = dchCodec;
-        this.dchCompress = dchCompress;
     }
 
     @Override
     public void run() throws Exception {
-        // boss线程池处理连接
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
-        // work线程池处理读/写操作
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        boss = new NioEventLoopGroup(dchServerProperties.getBossThreadCount(), bossTf);
+        work = new NioEventLoopGroup(dchServerProperties.getWorkThreadCount(), workTf);
         try {
-            // 服务端启动器
             ServerBootstrap bootstrap = new ServerBootstrap();
-            bootstrap.group(bossGroup, workerGroup)  // 设置线程池组：boss线程池组， work线程池组
-                    .channel(NioServerSocketChannel.class)  // 通道类型 Nio
+            bootstrap.group(boss, work)
+                    .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 1024)
-                    .childOption(ChannelOption.SO_BACKLOG, 1024)
-                    .childHandler(new ChannelInitializer<SocketChannel>() { // 责任链处理器
+                    .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
+                    .childOption(ChannelOption.SO_KEEPALIVE, false)
+                    .childOption(ChannelOption.TCP_NODELAY, true)
+                    .childOption(ChannelOption.SO_REUSEADDR, true)
+                    .childOption(ChannelOption.SO_LINGER, 0)
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            ChannelPipeline pipeline = socketChannel.pipeline();
-                            pipeline.addLast(new DchReqProtocolDecoder()); // DchReqProtocol
-                            pipeline.addLast(new DchReqBodyDecoder());     // List<Object>
+                            AbstractDchServer.this.initChannel(socketChannel);
                         }
                     });
             ChannelFuture future = bootstrap.bind(dchServerProperties.getPort()).sync();
             future.channel().closeFuture().sync();
-        } finally {
-            bossGroup.shutdownGracefully();
-            workerGroup.shutdownGracefully();
+        } catch (Exception e){
+            stop0();
         }
     }
+
+    private void stop0() {
+
+    }
+
+    protected abstract void initChannel(SocketChannel socketChannel);
+
+    protected abstract void close() throws Exception;
 
 }

@@ -29,6 +29,20 @@
             <version>4.1.68.Final</version>
         </dependency>
 
+        <!-- Jackson核心依赖 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.12.4</version>
+        </dependency>
+
+        <!-- Jackson数据绑定依赖 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>
