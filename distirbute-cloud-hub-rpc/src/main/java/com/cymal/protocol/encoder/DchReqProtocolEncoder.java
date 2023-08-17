@@ -1,6 +1,6 @@
 package com.cymal.protocol.encoder;
 
-import com.cymal.protocol.DchReqProtocol;
+import com.cymal.model.DchReqProtocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;

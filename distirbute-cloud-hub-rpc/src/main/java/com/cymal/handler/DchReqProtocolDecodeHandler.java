@@ -1,15 +1,15 @@
-package com.cymal.protocol.decoder;
+package com.cymal.handler;
 
+import com.cymal.model.DchContext;
 import com.cymal.model.DchReqProtocol;
 import com.cymal.constant.DchRequestProtocolConstant;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
-public class DchReqProtocolDecoder extends LengthFieldBasedFrameDecoder {
+public class DchReqProtocolDecodeHandler extends LengthFieldBasedFrameDecoder {
 
-
-    public DchReqProtocolDecoder() {
+    public DchReqProtocolDecodeHandler() {
         super(
                 DchRequestProtocolConstant.PROTOCOL_MAX_LEN,
                 DchRequestProtocolConstant.PROTOCOL_MAGIC_LEN +
@@ -33,13 +33,16 @@ public class DchReqProtocolDecoder extends LengthFieldBasedFrameDecoder {
     @Override
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
         Object decode = super.decode(ctx, in);
+        DchContext context = null;
         if (decode instanceof ByteBuf byteBuf) {
-            return decode(byteBuf);
+            DchReqProtocol reqProtocol = decode(byteBuf);
+            context = new DchContext();
+            context.setReqProtocol(reqProtocol);
         }
-        return null;
+        return context;
     }
 
-    private Object decode(ByteBuf byteBuf) {
+    private DchReqProtocol decode(ByteBuf byteBuf) {
         DchReqProtocol protocol = new DchReqProtocol();
         byte[] magicBytes = new byte[DchRequestProtocolConstant.PROTOCOL_MAGIC_LEN];
         byteBuf.readBytes(protocol.getMagic());
@@ -57,5 +60,4 @@ public class DchReqProtocolDecoder extends LengthFieldBasedFrameDecoder {
         protocol.setMagic(bodyBytes);
         return protocol;
     }
-
 }

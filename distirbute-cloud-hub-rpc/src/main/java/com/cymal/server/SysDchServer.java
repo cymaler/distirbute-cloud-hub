@@ -2,7 +2,7 @@ package com.cymal.server;
 
 import com.cymal.codec.DchCodec;
 import com.cymal.compress.DchCompress;
-import com.cymal.handler.InvokerMethodHandler;
+import com.cymal.handler.DchInvokerMethodHandler;
 import com.cymal.properties.DchServerProperties;
 import com.cymal.protocol.decoder.DchByteDecoder;
 import com.cymal.protocol.decoder.DchReqBodyDecoder;
@@ -33,11 +33,11 @@ public class SysDchServer extends AbstractDchServer{
 
     @Override
     protected void initChannel(SocketChannel socketChannel) {
-        socketChannel.pipeline()                            // ---> Pipeline.
+        socketChannel.pipeline()
                 .addLast(new DchByteDecoder(dchCompress))   // ---> Decompress Byte Array.=
                 .addLast(new DchReqProtocolDecoder())       // ---> DchReqProtocol.
                 .addLast(new DchReqBodyDecoder(dchCodec))   // ---> DchBody.
-                .addLast(new InvokerMethodHandler())        // ---> Result Object.
+                .addLast(new DchInvokerMethodHandler())        // ---> Result Object.
                 .addLast(new DchReqBodyEncoder(dchCodec))   // ---> DchResProtocol.
                 .addLast(new DchResProtocolEncoder())       // ---> ByteBuf.
                 .addLast(new DchByteEncoder(dchCompress));  // ---> Compress Byte Array.

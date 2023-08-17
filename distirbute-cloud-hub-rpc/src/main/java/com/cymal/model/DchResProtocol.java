@@ -1,4 +1,4 @@
-package com.cymal.protocol;
+package com.cymal.model;
 
 public class DchResProtocol {
 

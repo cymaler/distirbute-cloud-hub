@@ -1,7 +1,7 @@
-package com.cymal.body;
+package com.cymal.model;
 
 /**
- * The class describute 'distirbute-cloud-hub-rpc' request body.
+ * The class describute 'distirbute-cloud-hub-rpc' request model.
  */
 public class DchBody {
 

@@ -1,5 +1,6 @@
-package com.cymal.protocol;
+package com.cymal.model;
 
+// byte[] -> byte[] -> 框架http -> (header) body(byte[]) -> IRpcCodec decode body(obj)
 public class DchReqProtocol {
 
     private byte [] magic;

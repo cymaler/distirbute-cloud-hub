@@ -1,7 +1,7 @@
 package com.cymal.protocol.decoder;
 
 import com.cymal.codec.DchCodec;
-import com.cymal.protocol.DchReqProtocol;
+import com.cymal.model.DchReqProtocol;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 

@@ -1,6 +1,6 @@
 package com.cymal.handler;
 
-import com.cymal.body.DchBody;
+import com.cymal.model.DchBody;
 import com.cymal.config.DchServiceConfig;
 import com.cymal.config.DchServiceConfigCenter;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,7 +8,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.lang.reflect.Method;
 
-public class InvokerMethodHandler extends ChannelInboundHandlerAdapter {
+public class DchInvokerMethodHandler extends ChannelInboundHandlerAdapter {
 
     public static final transient Object NO_EXIST = new Object();
 
